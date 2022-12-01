@@ -4,16 +4,21 @@ using UnityEngine.UI;
 
 public class Player2D : MonoBehaviour {
 
-	public Transform[] bulletSpawnPos;	//Bullet spawn position
+	//public Transform[] bulletSpawnPos;
 	public GameObject bullet;			//Bullet prefab
+	public Transform bulletTransform;
+
 	public GameObject explosion;		//Explosion prefab
 	private int hp = 3;					//Health
 	private int score;					//Score
 	private float tmpFireTime;			//Tmp fire time
 	private bool dead;					//Are we dead
-	private Vector3 pos;				//Position
 	private bool canBeHit = true;		//Can we be hit
 	public Canvas GOCanvas;
+	private Rigidbody2D rb;
+
+	private Camera cam;					//Camera
+	private Vector3 mousePos;			//Position
 
 
 	void Start ()
@@ -24,6 +29,10 @@ public class Player2D : MonoBehaviour {
 		
 		//Set sleep time to never
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+		//Grab RB2D comp
+		rb = GetComponent<Rigidbody2D>();
+		cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 	}
 	
 	void Update()
@@ -40,76 +49,49 @@ public class Player2D : MonoBehaviour {
 	
 	void MoveUpdate()
 	{
-		//If the game is running on a android device
-		if (Application.platform == RuntimePlatform.IPhonePlayer)
-		{
-			//Get screen position
-			pos = Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 1));
+		//On WASD input, inact a force in given direction
+        if (Input.GetKey(KeyCode.A)) {
+        	rb.AddForce(Vector3.left);
 		}
-		//If the game is not running on an iphone device
-		else
-		{
-			//Get screen position
-			pos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
+        if (Input.GetKey(KeyCode.D)) {
+            rb.AddForce(Vector3.right);
 		}
-		
-		transform.position = new Vector3(pos.x,pos.y + 0.2f,pos.z);
+        if (Input.GetKey(KeyCode.W)) {
+            rb.AddForce(Vector3.up);
+		}
+        if (Input.GetKey(KeyCode.S)) {
+            rb.AddForce(Vector3.down);
+		}
 	}
-	
-	void ShotUpdate()
-	{
-		//If tmpFireTime is bigger than 0.2
-		if (tmpFireTime > 0.2f)
-		{
-			//If the game is running on an iphone device
-			if (Application.platform == RuntimePlatform.IPhonePlayer)
-			{
-				//If finger is on screen
-				if (Input.GetTouch(0).tapCount != 0)
-				{
-					//Go through all the bullet spawn position
-					for (int i = 0; i < bulletSpawnPos.Length; i++)
-					{
-						//Instantiate bullet
-						Instantiate(bullet,bulletSpawnPos[i].position,Quaternion.identity);
-						//Set tmpFireTime to 0
-						tmpFireTime = 0;
-					}
-				}
-				else
-				{
-					//Set tmpFireTime to 0.2
-					tmpFireTime = 0.2f;
-				}
+
+	void ShotUpdate() {
+		//Get mouse position relative to camera
+		mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+
+		//Create V3 for the rotation
+		Vector3 rotation = mousePos - transform.position;
+		float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+
+		//Rotate the ship on the new angle (and set one for the bullet trajectory)
+		transform.rotation = Quaternion.Euler(0, 0, rotZ);
+		Quaternion bulletRot = Quaternion.Euler(0, 0, rotZ - 90);
+
+		//Firerate stuff
+		if (tmpFireTime > 0.2f) {
+			if (Input.GetMouseButton(0)) {
+					Instantiate(bullet, transform.position, bulletRot);
+					//Set tmpFireTime to 0
+					tmpFireTime = 0;
 			}
-			//If the game is not running on an iphone device
-			else
-			{
-				//If get left mouse button down
-				if (Input.GetMouseButton(0))
-				{
-					//Go through all the bullet spawn position
-					for (int i = 0; i < bulletSpawnPos.Length; i++)
-					{
-						//Instantiate bullet
-						Instantiate(bullet,bulletSpawnPos[i].position,Quaternion.identity);
-						//Set tmpFireTime to 0
-						tmpFireTime = 0;
-					}
-				}
-				else
-				{
-					//Set tmpFireTime to 0.2
-					tmpFireTime = 0.2f;
-				}
+			else {
+				//Set tmpFireTime to 0.2
+				tmpFireTime = 0.2f;
 			}
-		}
-		//If tmpFireTime is less than 0.2
-		else
-		{
-			//Add 1 to tmpFireTime
+		} else {
 			tmpFireTime += 1 * Time.deltaTime;
 		}
+
+
 	}
 	
 	IEnumerator Hit()
