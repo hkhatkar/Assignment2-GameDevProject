@@ -169,7 +169,7 @@ public class Player2D : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		//If we are in a enemy trigger
-		if (other.tag == "Enemy")
+		if (other.tag == "Enemy" || other.tag == "enemyBullet")
 		{
 			//If we can be hit
 			if (canBeHit)
