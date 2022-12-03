@@ -17,8 +17,9 @@ public class obstacleAvoidanceBehaviour : steeringBehaviour
     {//ANANONYMOUS TYPES LOOK UP
         foreach (Collider2D obstacleCollider in aiData.obstacles)
         {
-            Vector2 directionToObstacle
-                = obstacleCollider.ClosestPoint(transform.position) - (Vector2)transform.position;
+            if (obstacleCollider != null)
+            {
+            Vector2 directionToObstacle = obstacleCollider.ClosestPoint(transform.position) - (Vector2)transform.position;
             float distanceToObstacle = directionToObstacle.magnitude;
 
             //calculate weight based on the distance Enemy<--->Obstacle
@@ -41,6 +42,7 @@ public class obstacleAvoidanceBehaviour : steeringBehaviour
                 {
                     danger[i] = valueToPutIn;
                 }
+            }
             }
         }
         dangersResultTemp = danger;

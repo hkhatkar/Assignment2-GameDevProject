@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Obstacle
   - enemyBullet
+  - ShieldPlayer
+  - Sprite
   layers:
   - Default
   - TransparentFX

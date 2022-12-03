@@ -14,6 +14,8 @@ public class Player2D : MonoBehaviour {
 	private Vector3 pos;				//Position
 	private bool canBeHit = true;		//Can we be hit
 	public Canvas GOCanvas;
+	[SerializeField] private GameObject blockedParticle;
+	UseShield shieldScript;
 
 
 	void Start ()
@@ -24,6 +26,8 @@ public class Player2D : MonoBehaviour {
 		
 		//Set sleep time to never
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+		shieldScript = gameObject.GetComponent<UseShield>();
 	}
 	
 	void Update()
@@ -169,7 +173,15 @@ public class Player2D : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		//If we are in a enemy trigger
-		if (other.tag == "Enemy" || other.tag == "enemyBullet")
+		if (shieldScript.shieldUp == true)
+		{
+			if (other.tag == "enemyBullet")
+			{
+				other.gameObject.SetActive(false);
+				Instantiate(blockedParticle,transform.position,Quaternion.identity);
+			}
+		}
+		else if (other.tag == "Enemy" || other.tag == "enemyBullet")
 		{
 			//If we can be hit
 			if (canBeHit)

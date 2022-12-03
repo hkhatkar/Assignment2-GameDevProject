@@ -10,6 +10,7 @@ public class enemyHealthManager : MonoBehaviour
     public float enemyKnockbackMultiplier;//used in other script getweapon
     private bool canBeHit = true;    //Can we be hit
     [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] SpriteRenderer playerSpriteRenderer;
 
     public Slider slider;
     public float maxHealth, currentHealth;
@@ -50,13 +51,13 @@ public class enemyHealthManager : MonoBehaviour
         canBeHit = false;
 
         //Set material color to red
-        GetComponent<SpriteRenderer>().color = Color.red;
+        playerSpriteRenderer.color = Color.red;
 
         //Wait 0.1 second
         yield return new WaitForSeconds(0.1f);
 
         //Set material color to white
-        GetComponent<SpriteRenderer>().color = Color.white;
+        playerSpriteRenderer.color = Color.white;
 
         //We can be hit
         canBeHit = true;

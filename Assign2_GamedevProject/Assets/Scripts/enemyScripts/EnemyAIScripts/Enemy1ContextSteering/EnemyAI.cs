@@ -115,7 +115,6 @@ public class EnemyAI : MonoBehaviour
             if (Vector2.Distance(gameObject.transform.position, aiData.currentTarget.position) < 5f )
             {
           
-          
                 transform.RotateAround(aiData.currentTarget.position, new Vector3(0f,0f,1f), rotationDir * Time.deltaTime);
                 transform.RotateAround(transform.position, new Vector3(0f,0f,-1f), rotationDir * Time.deltaTime);
             }
