@@ -19,6 +19,8 @@ public class Player2D : MonoBehaviour {
 
 	private Camera cam;					//Camera
 	private Vector3 mousePos;			//Position
+	[SerializeField] private GameObject blockedParticle;
+	UseShield shieldScript;
 
 
 	void Start ()
@@ -33,6 +35,7 @@ public class Player2D : MonoBehaviour {
 		//Grab RB2D comp
 		rb = GetComponent<Rigidbody2D>();
 		cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+		shieldScript = gameObject.GetComponent<UseShield>();
 	}
 	
 	void Update()
@@ -151,7 +154,15 @@ public class Player2D : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		//If we are in a enemy trigger
-		if (other.tag == "Enemy")
+		if (shieldScript.shieldUp == true)
+		{
+			if (other.tag == "enemyBullet")
+			{
+				other.gameObject.SetActive(false);
+				Instantiate(blockedParticle,transform.position,Quaternion.identity);
+			}
+		}
+		else if (other.tag == "Enemy" || other.tag == "enemyBullet")
 		{
 			//If we can be hit
 			if (canBeHit)

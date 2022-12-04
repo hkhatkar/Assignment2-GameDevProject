@@ -26,8 +26,8 @@ public class bullet2D : MonoBehaviour {
         //If we are in a enemy trigger
         if (other.gameObject.tag == "Enemy")
         {
-            //Hit enemy
-            other.GetComponent<enemy2D>().Hit(damage);
+            
+            other.GetComponent<enemyHealthManager>().takeDamage(0.5f);
             //Destroy
             Destroy(gameObject);
             
