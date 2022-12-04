@@ -9,6 +9,9 @@ TagManager:
   - enemyBullet
   - ShieldPlayer
   - Sprite
+  - spawnManager
+  - roundManager
+  - spawner
   layers:
   - Default
   - TransparentFX

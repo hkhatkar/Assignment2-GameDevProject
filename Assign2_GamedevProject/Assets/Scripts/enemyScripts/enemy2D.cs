@@ -42,11 +42,6 @@ public class enemy2D : MonoBehaviour {
             if (hp < 1)
             {
 
-
-
-                //Add score to player
-                player.GetComponent<Player2D>().AddScore(score);
-
                 //Destroy
                 Instantiate(explosionPrefab, new Vector3((gameObject.transform.position).x, (gameObject.transform.position).y, (gameObject.transform.position).z), Quaternion.identity);
                 Destroy(gameObject);

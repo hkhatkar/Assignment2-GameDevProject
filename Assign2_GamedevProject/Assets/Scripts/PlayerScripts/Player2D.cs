@@ -134,16 +134,16 @@ public class Player2D : MonoBehaviour {
 		canBeHit = true;
 	}
 	
-	public void AddScore(int _score)
-	{
+	//public void AddScore(int _score)
+	//{
 		//Add _score to score
-		score += _score;
-	}
+	//	score += _score;
+	//}
 
 	//return score
-	public int DisplayScore(){
-		return score;
-	}
+	//public int DisplayScore(){
+	//	return score;
+	//}
 
 
 	//return hp
