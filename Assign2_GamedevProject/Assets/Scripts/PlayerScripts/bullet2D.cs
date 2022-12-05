@@ -32,6 +32,10 @@ public class bullet2D : MonoBehaviour {
             Destroy(gameObject);
             
         }
+        else if (other.gameObject.tag == "Obstacle")
+        {
+            Destroy(gameObject);
+        }
     }
     
     IEnumerator DestroyGo()
