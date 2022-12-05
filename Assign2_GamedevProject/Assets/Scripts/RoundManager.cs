@@ -34,7 +34,7 @@ public class RoundManager : MonoBehaviour
         //and ui
         //ON DEATH RESET
         if (inRound == true){
-            objectiveText.text = "Objective:  Kill " + objectiveKills +  " enemies. Killed: " + currentKillCount;
+            objectiveText.text = "Objective:  Kill " + objectiveKills +  " enemies || Killed: " + currentKillCount;
         }
 
         if (Input.GetKeyUp(KeyCode.Return) && inRound == false ) // enter key 
