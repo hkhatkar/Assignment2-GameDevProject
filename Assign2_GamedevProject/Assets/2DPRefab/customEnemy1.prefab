@@ -889,6 +889,7 @@ MonoBehaviour:
   enemyKnockbackMultiplier: 0
   explosionPrefab: {fileID: 190718, guid: 759ae7872c7aa41a29caeba53fa8b2b6, type: 3}
   playerSpriteRenderer: {fileID: 6973621978531715488}
+  coinPrefab: {fileID: 2696742895948916042, guid: 35c08d4b07f8cc147a171fe38d5c3d36, type: 3}
   slider: {fileID: 4256818483048537777}
   maxHealth: 4
   currentHealth: 4
