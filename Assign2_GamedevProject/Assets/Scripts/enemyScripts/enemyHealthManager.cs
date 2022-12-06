@@ -13,6 +13,8 @@ public class enemyHealthManager : MonoBehaviour
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] SpriteRenderer playerSpriteRenderer;
 
+    [SerializeField] private GameObject coinPrefab;
+
     public Slider slider;
     public float maxHealth, currentHealth;
     // Update is called once per frame
@@ -43,6 +45,7 @@ public class enemyHealthManager : MonoBehaviour
         {
             roundScript.currentKillCount++;
             Instantiate(explosionPrefab, new Vector3((gameObject.transform.position).x, (gameObject.transform.position).y, (gameObject.transform.position).z), Quaternion.identity);
+            Instantiate(coinPrefab, new Vector3((gameObject.transform.position).x, (gameObject.transform.position).y, (gameObject.transform.position).z), Quaternion.identity);
             gameObject.SetActive(false);
           // DESTROY GAME OBJECTS LATER: prevents null error when bullet collides with object
         }

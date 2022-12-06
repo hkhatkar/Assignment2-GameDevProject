@@ -8,6 +8,7 @@ public class RoundManager : MonoBehaviour
     int currentRound;
     public int currentKillCount; //increment in enemy scripts before they die
     int objectiveKills=0;
+    int coinCount = 0;
     bool inRound=false;
     placeSpawners placeSpawnerScript;
     GameObject[] allEnemies;
@@ -17,6 +18,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] GameObject enterRoundPrompt;
     [SerializeField] GameObject roundStartUI;
     [SerializeField] TextMeshProUGUI roundText;
+    [SerializeField] TextMeshProUGUI coinText;
     [SerializeField] GameObject enemySpawner;
     
     
@@ -74,5 +76,10 @@ public class RoundManager : MonoBehaviour
             inRound=false;
 
         }
+    }
+
+    public void incrementCoin() {
+        coinCount = coinCount + 1;
+        coinText.text = "Coins: " + coinCount;
     }
 }
